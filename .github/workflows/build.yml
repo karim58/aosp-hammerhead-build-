@@ -8,34 +8,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Install dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y repo ccache bc bison build-essential curl flex g++-multilib gcc-multilib git gnupg gperf imagemagick lib32ncurses5-dev lib32readline-dev lib32z1-dev liblz4-tool libncurses5 libncurses5-dev libsdl1.2-dev libssl-dev libxml2 libxml2-utils lzop pngcrush schedtool squashfs-tools xsltproc zip zlib1g-dev
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y repo ccache bc bison build-essential curl flex g++-multilib gcc-multilib git gnupg gperf imagemagick lib32ncurses5-dev lib32readline-dev lib32z1-dev liblz4-tool libncurses5 libncurses5-dev libsdl1.2-dev libssl-dev libxml2 libxml2-utils lzop pngcrush schedtool squashfs-tools xsltproc zip zlib1g-dev
 
-    - name: Setup repo and sync source
-      run: |
-        mkdir -p ~/android/lineage
-        cd ~/android/lineage
-        repo init -u https://github.com/LineageOS/android.git -b lineage-15.1
-        repo sync -c -j8 --no-clone-bundle --no-tags
+      - name: Setup repo and sync source
+        run: |
+          mkdir -p ~/android/lineage
+          cd ~/android/lineage
+          repo init -u https://github.com/LineageOS/android.git -b lineage-15.1
+          repo sync -c -j8 --no-clone-bundle --no-tags
 
-    - name: Initialize environment and lunch device
-      run: |
-        cd ~/android/lineage
-        source build/envsetup.sh
-        lunch lineage_hammerhead-userdebug
+      - name: Initialize environment and lunch device
+        run: |
+          cd ~/android/lineage
+          source build/envsetup.sh
+          lunch lineage_hammerhead-userdebug
 
-    - name: Build LineageOS
-      run: |
-        cd ~/android/lineage
-        make -j8
+      - name: Build LineageOS
+        run: |
+          cd ~/android/lineage
+          make -j8
 
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: lineage-15.1-hammerhead
-        path: |
-          ~/android/lineage/out/target/product/hammerhead/*.zip
-          ~/android/lineage/out/target/product/hammerhead/*.img
-Add build workflow
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: lineage-15.1-hammerhead
+          path: |
+            ~/android/lineage/out/target/product/hammerhead/*.zip
+            ~/android/lineage/out/target/product/hammerhead/*.img
