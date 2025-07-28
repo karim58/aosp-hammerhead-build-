@@ -36,5 +36,5 @@ jobs:
         with:
           name: lineage-15.1-hammerhead
           path: |
-            ~/android/lineage/out/target/product/hammerhead/*.zip
-            ~/android/lineage/out/target/product/hammerhead/*.img
+            android/lineage/out/target/product/hammerhead/*.zip
+            android/lineage/out/target/product/hammerhead/*.img
